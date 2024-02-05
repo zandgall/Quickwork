@@ -5,32 +5,50 @@
 #include <string>
 #include <map>
 namespace qwui {
-	enum Anchor {
-		left = 1, middle = 2, right = 4,
-		top = 8, center = 16, bottom = 32
+	enum snap {
+		left = 1, center = 2, right = 4,
+		top = 8, middle = 16, bottom = 32,
+
+		topLeft = top|left, topCenter = top|center, bottomRight = top|right,
+		middleLeft = middle|left, middleCenter = middle|center, middleRight = middle|right,
+		bottomLeft = bottom|left, bottomCenter = bottom|center, bottomRight = bottom|right
 	};
 
 	struct frame {
 		glm::vec2 offset, size;
 	};
 
-	class component {
+	class anchor {
 	protected:
 		glm::vec2 relative_pos;
-		int anchor, screen_anchor;
+		int snapping;
 	public:
-		component(): relativePos(0,0), anchor(left|top), screen_anchor(left|top) {}
-		virtual glm::vec2 getPos(const frame* screen); // Returns position on screen
+		anchor(): relative_pos(0), snapping(left | top) {}
+		glm::vec2 getPos(const frame* screen);
+		glm::vec2 getRelativePos() {return relative_pos;}
+		void setRelativePos(glm::vec2 pos) {this->relative_pos = pos;}
+		void setSnapping(int snapping) {this->snapping = snapping;}
+		void set(glm::vec2 pos, int snapping) {setRelativePos(pos); setSnapping(snapping);}
+		int getSnapping() {return snapping;}
+	};
+
+	class component {
+	protected:
+		anchor anch;
+		int alignment;
+	public:
+		component(): anch(), alignment(left|top) {}
+		glm::vec2 getPos(const frame* screen); // Returns position on screen
 
 		virtual void tick() = 0;
 		virtual glm::vec2 getSize(const frame* screen) const = 0; // Returns size of element
 		virtual void render(const frame* screen = nullptr) = 0;
 
 		virtual glm::vec4 getScreenRect(const frame* screen) {return glm::vec4(getPos(screen), getSize(screen));} // Returns the position and size of the element on screen
-		virtual glm::vec2 getRelativePos() {return relative_pos;} // Returns pos relative to the anchors
-		virtual void setRelativePos(float x, float y) {this->relative_pos = glm::vec2(x, y);}
-		virtual void setAnchor(int a) {anchor = a;} // Sets the anchor for the element. If it were, say, centered, then getPos will offset by half 
-		virtual void setScreenAnchor(int a) {screen_anchor = a;}
+		virtual glm::vec2 getRelativePos() {return anch.getRelativePos();} // Returns pos relative to the anchors
+		virtual void setRelativePos(float x, float y) {anch.setRelativePos(glm::vec2(x, y));}
+		virtual void setAlignment(int a) {alignment = a;} // Sets the anchor for the element. If it were, say, centered, then getPos will offset by half 
+		virtual void setSnapping(int a) {anch.setSnapping(a);}
 	};
 
 	class text : public component {
@@ -47,15 +65,13 @@ namespace qwui {
 	};
 
 	class interface {
-		frame frame;
-		int top_left_anchor, bottom_right_anchor;
-		glm::vec2 top_left_pos, bottom_right_pos;
+		anchor top_left, bottom_right;
 	public:
 		std::map<std::string, component*> components = std::map<std::string, component*>();
 		void tick();
 		void render();
-		void setAnchor(int a) {anchor = a;}
-		void setScreenAnchor(int a) {screen_anchor = a;}
-	}
+		anchor& topLeft() {return top_left;}
+		anchor& bottomRight() {return bottom_right;}
+	};
 }
 #endif

@@ -20,8 +20,8 @@ int main(int args, char** argv) {
 
     qwui::text txt = qwui::text("Text Element", "roboto", 24.f);
     txt.setRelativePos(-10, -40);
-    txt.setAnchor(qwui::Anchor::right | qwui::Anchor::bottom);
-    txt.setScreenAnchor(qwui::Anchor::right | qwui::Anchor::bottom);
+    txt.setAlignment(qwui::snap::right | qwui::snap::bottom);
+    txt.setSnapping(qwui::snap::right | qwui::snap::bottom);
 
     while(!qw::should_close) {
         glViewport(0, 0, qw::width, qw::height);
