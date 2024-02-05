@@ -9,7 +9,7 @@ namespace qwui {
 		left = 1, center = 2, right = 4,
 		top = 8, middle = 16, bottom = 32,
 
-		topLeft = top|left, topCenter = top|center, bottomRight = top|right,
+		topLeft = top|left, topCenter = top|center, topRight = top|right,
 		middleLeft = middle|left, middleCenter = middle|center, middleRight = middle|right,
 		bottomLeft = bottom|left, bottomCenter = bottom|center, bottomRight = bottom|right
 	};
