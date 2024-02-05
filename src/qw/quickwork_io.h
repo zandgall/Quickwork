@@ -1,3 +1,5 @@
+#ifndef QUICKWORK_IO_H
+#define QUICKWORK_IO_H
 namespace qwio {
     extern unsigned int load_shader(const char* path);
     extern unsigned int get_loaded_shader(const char* name);
@@ -9,3 +11,4 @@ namespace qwio {
 
     extern void load_font_as(const char* path, const char* name, int font_size=48, unsigned long glyphs_to_load=256UL);
 }
+#endif

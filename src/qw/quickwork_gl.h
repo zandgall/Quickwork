@@ -1,3 +1,6 @@
+#pragma once
+#ifndef QUICKWORK_GL_H
+#define QUICKWORK_GL_H
 #include <glm/glm.hpp>
 namespace qwgl {
     // Uniform functions
@@ -46,3 +49,4 @@ namespace qwgl {
     // Create a transformation that represents a line between two points, with a width
     extern glm::mat4 line_2d(glm::vec2 a, glm::vec2 b, float thickness = 10);
 }
+#endif

@@ -1,7 +1,7 @@
 # Zandgall's Quickwork
 
 cmake_minimum_required(VERSION 3.22.1)
-project(Quickwork VERSION 0.1 DESCRIPTION "A quick working OpenGL project framework")
+project(Quickwork VERSION 0.2 DESCRIPTION "A quick working OpenGL project framework")
 
 # Grab all the files in /src/...
 file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.c ${CMAKE_SOURCE_DIR}/src/*.cpp)

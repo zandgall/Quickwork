@@ -1,6 +1,7 @@
 #include "qw/quickwork.h"
 #include "qw/quickwork_io.h"
 #include "qw/quickwork_gl.h"
+#include "qw/quickwork_ui.h"
 
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
@@ -16,6 +17,11 @@ int main(int args, char** argv) {
     // Idea? // qwgl::create_texture_2D();
 
     glUseProgram(qwio::get_loaded_shader("default shader"));
+
+    qwui::text txt = qwui::text("Text Element", "roboto", 24.f);
+    txt.setRelativePos(-10, -40);
+    txt.setAnchor(qwui::Anchor::right | qwui::Anchor::bottom);
+    txt.setScreenAnchor(qwui::Anchor::right | qwui::Anchor::bottom);
 
     while(!qw::should_close) {
         glViewport(0, 0, qw::width, qw::height);
@@ -55,6 +61,8 @@ int main(int args, char** argv) {
         spinning_text_surface = glm::rotate<float>(spinning_text_surface, glfwGetTime(), glm::vec3(0, 1, 0));
         // Draw the string "Quickwork Template" on the surface we just created
         qw::draw_string_on("Quickwork Template", "roboto", spinning_text_surface);
+
+        txt.render();
 
         qw::poll();
     }

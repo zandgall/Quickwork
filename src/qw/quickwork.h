@@ -1,3 +1,7 @@
+#pragma once
+#ifndef QUICKWORK_H
+#define QUICKWORK_H
+
 #include <glad/gl.h>
 #include <KHR/khrplatform.h>
 #include <GLFW/glfw3.h>
@@ -101,4 +105,5 @@ namespace qw {
 
     // Draw a string onto a predefined surface, using the given font. The size of the text will be stretched to fit the given surface. Surface is as if it's a transformation of a rectangle.
     extern void draw_string_on(std::string string, std::string font, glm::mat4 surface);
-};
+}
+#endif
